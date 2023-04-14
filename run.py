@@ -14,14 +14,15 @@ while not game.done:
     player = player1 if turn else player2
 
     move = player.get_move(game.board)
-
     game.place_chip(move, player.value)
 
     print_board(game.board)
     print("*"*20)
     print("*"*20)
-    print("*"*20)
-    print("*"*20)
-    print("*"*20)
+
+    input()
+
 
     turn = not turn
+
+print(game.winner)

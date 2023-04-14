@@ -2,23 +2,21 @@ from functools import partial
 
 class Connect4:
     def __init__(self):
-        self.board = [[0]*7]*6
+        self.board = [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]
         self.done = False
+        self.winner = 0
 
     def place_chip(self, pos, player_val):
-        place_pos = 0
-        for i in range(0, 5):
+        for i in range(5, -1, -1):
             square = self.board[i][pos]
-            if (square != 0):
-                place_pos = i-1
-        if (place_pos != -1):
-            self.board[place_pos][i] = player_val
-            self.done = self.check_for_win() != -1
-            
-            return True
-        else:
-            return False
-
+            if (square == 0):
+                place_pos = i
+                self.board[place_pos][pos] = player_val
+                self.done = self.check_for_win() != -1
+                if(self.done):
+                    self.winner = player_val
+                return True
+        return False
    
     def check_for_win(self):
         east = [(0,0),(0,1),(0,2),(0,3)]
@@ -29,7 +27,7 @@ class Connect4:
         a = lambda x, y: self.board[x[0]+y[0]][x[1]+y[1]]
 
         for x in range(0, 6):
-            for y in range(0, 3):
+            for y in range(0, 4):
                 pos = (x, y)
                 get = partial(a, y=pos)
 
@@ -40,7 +38,7 @@ class Connect4:
                     return get(east[0])
         
         for x in range(0, 3):
-            for y in range(0, 6):
+            for y in range(0, 7):
                 pos = (x, y)
                 get = partial(a, y=pos)
 
