@@ -5,20 +5,19 @@ class Connect4:
     def __init__(self):
         self.board = [[0]*7]*6
 
-    
-    def place_chip(pos, playerVal):
-        placePos = 0
+    def place_chip(pos, player_val):
+        place_pos = 0
         for i in range(0, 5):
             square = board[i][pos]
             if(square != 0):
-                placePos = i-1
-        if(placePos != -1)
-            board[placePos][i] = playerVal
+                place_pos = i-1
+        if(place_pos != -1)
+            board[place_pos][i] = player_val
             return True
         else:
             return False
 
-    def check_for_win(x, y, playerVal):
+    def check_for_win(x, y, player_val):
         were_good_counter = 0
         
         for d in range(0, 7):
@@ -56,14 +55,17 @@ class Connect4:
                     check_x = check_x - i
                 
                 if(check_y >= 0 and check_x >= 0 and check_y <= 5 and check_x <= 6):
-                    if(board[check_y][check_x] == playerVal):
+                    if(board[check_y][check_x] == player_val):
                         were_good_counter += 1
                     else:
                         break
+                else:
+                    break
                     
                 if(were_good_counter == 4):
                     return True
         
+        return False
 
 
 
