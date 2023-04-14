@@ -1,74 +1,76 @@
+from functools import partial
 
 class Connect4:
     def __init__(self):
         self.board = [[0]*7]*6
         self.done = False
 
-    def place_chip(pos, player_val):
+    def place_chip(self, pos, player_val):
         place_pos = 0
         for i in range(0, 5):
-            square = board[i][pos]
-            if(square != 0):
+            square = self.board[i][pos]
+            if (square != 0):
                 place_pos = i-1
-        if(place_pos != -1)
-            board[place_pos][i] = player_val
+        if (place_pos != -1):
+            self.board[place_pos][i] = player_val
+            self.done = self.check_for_win() != -1
+            
             return True
         else:
             return False
 
-    def is_move_valid(pos):
-        return board[0][pos] == 0
+   
+    def check_for_win(self):
+        east = [(0,0),(0,1),(0,2),(0,3)]
+        south = [(0,0),(1,0),(2,0),(3,0)]
+        southeast = [(0,0),(1,1),(2,2),(3,3)]
+        southwest = [(0,0),(1,-1),(2,-2),(3,-3)]
 
-    def check_for_win(x, y, player_val):
-        were_good_counter = 0
+        a = lambda x, y: self.board[x[0]+y[0]][x[1]+y[1]]
+
+        for x in range(0, 6):
+            for y in range(0, 3):
+                pos = (x, y)
+                get = partial(a, y=pos)
+
+                if(get(east[0]) == 0):  
+                    continue
+
+                if get(east[0]) == get(east[1]) and get(east[1]) == get(east[2]) and get(east[2]) == get(east[3]):
+                    return get(east[0])
         
-        for d in range(0, 7):
-            for i in range(0, 3):
-                check_y = y 
-                check_x = x
+        for x in range(0, 3):
+            for y in range(0, 6):
+                pos = (x, y)
+                get = partial(a, y=pos)
 
-                #west
-                if(d == 0):
-                    check_x = check_x - i
-                #east
-                if(d == 1):
-                    check_x = check_x + i
-                #north
-                if(d == 2):
-                    check_y = check_y - i
-                #south
-                if(d == 3):
-                    check_y = check_y + i
-                #northwest
-                if(d == 4):
-                    check_y = check_y - i
-                    check_x = check_x - i
-                #northeast:
-                if(d == 5):
-                    check_y = check_y - i
-                    check_x = check_x + i
-                #southeast:
-                if(d == 6):
-                    check_y = check_y + i
-                    check_x = check_x + i
-                #southwest
-                if(d == 7):
-                    check_y = check_y - i
-                    check_x = check_x - i
-                
-                if(check_y >= 0 and check_x >= 0 and check_y <= 5 and check_x <= 6):
-                    if(board[check_y][check_x] == player_val):
-                        were_good_counter += 1
-                    else:
-                        break
-                else:
-                    break
-                    
-                if(were_good_counter == 4):
-                    return True
+                if(get(south[0]) == 0):  
+                    continue
+
+                if get(south[0]) == get(south[1]) and get(south[1]) == get(south[2]) and get(south[2]) == get(south[3]):
+                    return get(south[0])
         
-        return False
 
+        for x in range(0, 3):
+            for y in range(0, 4):
+                pos = (x, y)
+                get = partial(a, y=pos)
 
+                if(get(southeast[0]) == 0):  
+                    continue
 
+                if get(southeast[0]) == get(southeast[1]) and get(southeast[1]) == get(southeast[2]) and get(southeast[2]) == get(southeast[3]):
+                    return get(southeast[0])
 
+        for x in range(0, 3):
+            for y in range(3, 7):
+                pos = (x, y)
+                get = partial(a, y=pos)
+
+                if(get(southwest[0]) == 0):  
+                    continue
+
+                if get(southwest[0]) == get(southwest[1]) and get(southwest[1]) == get(southwest[2]) and get(southwest[2]) == get(southwest[3]):
+                    return get(southwest[0])
+
+        return -1
