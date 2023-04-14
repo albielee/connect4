@@ -12,3 +12,5 @@ while not game.done:
     game.make_move(move)
 
     turn = not turn
+
+dan
