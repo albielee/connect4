@@ -1,12 +1,8 @@
 
-
-
 class Connect4:
     def __init__(self):
         self.board = [[0]*7]*6
-
-    def play_move(player_val):
-        calculate_move
+        self.done = False
 
     def place_chip(pos, player_val):
         place_pos = 0
