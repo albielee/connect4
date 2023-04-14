@@ -5,6 +5,9 @@ class Connect4:
     def __init__(self):
         self.board = [[0]*7]*6
 
+    def play_move(player_val):
+        calculate_move
+
     def place_chip(pos, player_val):
         place_pos = 0
         for i in range(0, 5):
@@ -16,6 +19,9 @@ class Connect4:
             return True
         else:
             return False
+
+    def is_move_valid(pos):
+        return board[0][pos] == 0
 
     def check_for_win(x, y, player_val):
         were_good_counter = 0
